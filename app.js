@@ -10,27 +10,26 @@
 
   firebase.initializeApp(firebaseConfig);
 
-  var database = firebase.database();
+        var database = firebase.database();
 
-  var time = "";
+        var time = "";
 
-// inputs
+// inputs for firebase
 $("#add-train-btn").on("click", function(event) {
   event.preventDefault();
-  var trainName =$("#train-name-input").val().trim();
-  var destination = $("#destination-input").val().trim();
-  var frequency = $("#frequency-input").val().trim();
-  var time = $("#time-input").val().trim();
+        var trainName =$("#train-name-input").val().trim();
+        var destination = $("#destination-input").val().trim();
+        var frequency = $("#frequency-input").val().trim();
+        var time = $("#time-input").val().trim();
 
 // this needs to be calculated
 
-
   console.log(trainName)
   console.log(destination)
-  console.log(time)
+//   console.log(time)
   console.log(frequency)
 
-  database.ref().push({
+    database.ref().push({
         name: trainName,
         destination: destination,
         frequency: frequency,
@@ -40,11 +39,10 @@ $("#add-train-btn").on("click", function(event) {
 
     })
 
-
     // time calulation
-//  var firsTime = time
-//  var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "weeks");
-//  console.log(firstTimeConverted)
+        var firsTime = time
+        var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "weeks");
+        console.log(firstTimeConverted)
     
     // firebase watcher + initial loader 
     database.ref().on("child_added", function(childSnapshot) {
@@ -53,17 +51,12 @@ $("#add-train-btn").on("click", function(event) {
         var destinationDb = childSnapshot.val().destination;
         var frequencyDb = childSnapshot.val().frequency;
         
-  
-       
         // Log everything that's coming out of snapshot
         console.log(nameDb);
         console.log(destinationDb);
         console.log(frequencyDb);
 
-        // console.log(childSnapshot.val().time);
-       
-        
-         
+        //  creates new rows with fb data
         var newRow = $("<tr>").append(
             $("<td>").text(nameDb),
             $("<td>").text(destinationDb),
@@ -73,7 +66,7 @@ $("#add-train-btn").on("click", function(event) {
             // $("<td>").text(empBilled)
           );
         
-          // Append the new row to the table
+          // Appends the new row to the HTML table
           $("#train-table > tbody").append(newRow);
         });
 
