@@ -12,28 +12,23 @@
 
   var database = firebase.database();
 
-//   var trainName = "";
-//   var destination = "";
-//   var frequency = "";
   var time = "";
 
-
+// inputs
 $("#add-train-btn").on("click", function(event) {
   event.preventDefault();
+  var trainName =$("#train-name-input").val().trim();
+  var destination = $("#destination-input").val().trim();
+  var frequency = $("#frequency-input").val().trim();
+  var time = $("#time-input").val().trim();
 
-   var trainName =$("#train-name-input").val().trim();
-   var destination = $("#destination-input").val().trim();
-   var frequency = $("#frequency-input").val().trim();
-//    time = $("#time-input").val().trim();
-  
-  // this needs to be calculated
-//   var time = $("#time-input").val().trim();
+// this needs to be calculated
 
 
-//   console.log(trainName)
-//   console.log(destination)
-//   console.log(time)
-//   console.log(frequency)
+  console.log(trainName)
+  console.log(destination)
+  console.log(time)
+  console.log(frequency)
 
   database.ref().push({
         name: trainName,
@@ -44,6 +39,12 @@ $("#add-train-btn").on("click", function(event) {
       })
 
     })
+
+
+    // time calulation
+//  var firsTime = time
+//  var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "weeks");
+//  console.log(firstTimeConverted)
     
     // firebase watcher + initial loader 
     database.ref().on("child_added", function(childSnapshot) {
@@ -55,26 +56,31 @@ $("#add-train-btn").on("click", function(event) {
   
        
         // Log everything that's coming out of snapshot
-        console.log(childSnapshot.val().nameDb);
-        console.log(childSnapshot.val().destinationDb);
-        console.log(childSnapshot.val().frequencyDb);
+        console.log(nameDb);
+        console.log(destinationDb);
+        console.log(frequencyDb);
+
         // console.log(childSnapshot.val().time);
-        // console.log(childSnapshot.val())
+       
         
          
         var newRow = $("<tr>").append(
             $("<td>").text(nameDb),
             $("<td>").text(destinationDb),
             $("<td>").text(frequencyDb),
-            $("<td>").text(time),
-            
-              
-          $("#train-table > tbody").append(newRow))
+            // $("<td>").text(empMonths),
+            // $("<td>").text(empRate),
+            // $("<td>").text(empBilled)
+          );
+        
+          // Append the new row to the table
+          $("#train-table > tbody").append(newRow);
+        });
 
       // Handle the errors
-    }, function(errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-    });
+    //  function(errorObject) {
+    //   console.log("Errors handled: " + errorObject.code);
+    // };
 
    
 
